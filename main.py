@@ -12,7 +12,7 @@ file_prefix = ''
 back_button = False
 
 #file_path_list = os.popen("pwd").readlines()
-file_path = "/home/pi/Thing"
+file_path = "/home/pi/ThingBoard"
 #print (file_path) 
 files = os.popen ("ls " + file_path).readlines()
 print_to_screen(0, 0, files[x].upper(), 7, 1)
@@ -68,7 +68,6 @@ while True:
     if button_state_SW2 == False:
         clear()
         if clicked == False :
-            x = x - 1
             if x < 0 :
                 clear()
                 x = len(files)-1
@@ -84,12 +83,15 @@ while True:
             clicked = True
         else :
             clicked = True
+        x = x - 1
+
     elif button_state_SW3 == False:
         clear()
         """Put following if statement inside next if statement, also do with SW2"""
        
         if clicked == False :
             x = x - 1
+            print ("X is " + str(x))
             if x == len(files):
                 clear()
                 x = 0 
@@ -114,7 +116,7 @@ while True:
             files = os.popen("ls " + file_path).readlines()
             "Run file if the file name contains .py"""
         elif '.py' in files[x] :
-            code_result = os.popen ("python3 " + file_path + '/' + files[x])
+            code_result = os.popen ("python3 " + file_path + '/' + files[x]).readlines()
             quit()
             """If the item at position x is not a .py file, go forward one directory"""    
         elif clicked == False :
