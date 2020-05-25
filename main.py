@@ -1,20 +1,21 @@
-from OLED_Text import print_to_screen, show, clear
+from OLED_Text import print_to_screen, show, clear, test
+from OLED_Icons import folder_icon, python_icon
 import os
 import RPi.GPIO as GPIO
 GPIO.setwarnings(False) 
 GPIO.setmode(GPIO.BCM)
-
+import time
 x = 0
 clicked = False
 folders_entered = 0
 file_prefix = '' 
 back_button = False
 
-files = os.popen ("ls").readlines()
 #file_path_list = os.popen("pwd").readlines()
-file_path = "/home/pi/Thing-RPI-IOT-Prototyping-Board"
+file_path = "/home/pi/Thing"
 #print (file_path) 
-print_to_screen(0, 0, files[x].upper())
+files = os.popen ("ls " + file_path).readlines()
+print_to_screen(0, 0, files[x].upper(), 7, 1)
 show()
 
 from board import SCL, SDA
@@ -54,7 +55,7 @@ def right_button() :
     x = x + 1
     if x == len(files) :
         x = 0
-    print_to_screen(0, 0, files[x].upper())
+    print_to_screen(0, 0, files[x].upper(), 7, 1)
     show()
 
 while True:
@@ -71,12 +72,12 @@ while True:
             if x < 0 :
                 clear()
                 x = len(files)-1
-                print ("x is 0")
+                print ("back button is true")
                 back_button = True
-                print_to_screen(0, 0, "GO BACK")
+                print_to_screen(0, 0, "GO BACK", 7, 1)
                 show()
             else :    
-                print_to_screen(0, 0, files[x].upper())
+                print_to_screen(0, 0, files[x].upper(), 7, 1)
                 show()
                 back_button = False
                 print ("back button is false")
@@ -86,35 +87,36 @@ while True:
     elif button_state_SW3 == False:
         clear()
         """Put following if statement inside next if statement, also do with SW2"""
+       
         if clicked == False :
-            x = x + 1
-            if x == len(files) :
+            x = x - 1
+            if x == len(files):
                 clear()
-                x = 0
-                print ("x is 0")
+                x = 0 
+                print ("back button is true")
                 back_button = True
-                print_to_screen(0, 0, "GO BACK")
+                print_to_screen(0, 0, "GO BACK", 7, 1)
                 show()
             else :    
-                print_to_screen(0, 0, files[x].upper())
+                print_to_screen(0, 0, files[x].upper(), 7, 1)
                 show()
                 back_button = False
                 print ("back button is false")
             clicked = True
+        else :
+            clicked = True
     elif button_state_SW5 == False:
         clear()
+        "If 'go back' is being displayed, go back one directory"""
         if back_button == True:
-            if '.py' in file_path :
-                print (file_path)
-                os.popen ("python " + file_path)
-                files = os.popen ("ls " + go_back(file_path)).readlines()
-            else:
-                result = go_back(file_path)
-                x = 0
-                file_path = result
-                print (file_path)
-                files = os.popen("ls " + file_path).readlines()
-
+            file_path = go_back(file_path)
+            x = 0            
+            files = os.popen("ls " + file_path).readlines()
+            "Run file if the file name contains .py"""
+        elif '.py' in files[x] :
+            code_result = os.popen ("python3 " + file_path + '/' + files[x])
+            quit()
+            """If the item at position x is not a .py file, go forward one directory"""    
         elif clicked == False :
             file_path = file_path + '/'
             file_path += files[x].rstrip("\n\r")
@@ -125,7 +127,7 @@ while True:
             files = os.popen("ls " + file_path).readlines()
             clicked = True
             x = 0
-        print_to_screen(0, 0, files[x].upper())
+        print_to_screen(0, 0, files[x].upper(), 7, 1)
         show ()
     else:
         clicked = False
