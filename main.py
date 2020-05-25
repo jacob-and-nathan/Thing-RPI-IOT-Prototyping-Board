@@ -1,4 +1,4 @@
-from OLED_Text import print_to_screen, show, clear, test
+from OLED_Text import print_to_screen, show, clear
 from OLED_Icons import folder_icon, python_icon
 import os
 import RPi.GPIO as GPIO
