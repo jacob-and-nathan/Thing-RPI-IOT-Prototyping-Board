@@ -4,3 +4,14 @@ You can view project progress details at https://hackaday.io/project/170841-thin
 Right now, you can only use the buttons to browse files, but I'll add code to run python files.
 Then, I'll make it run on boot, and add a python program that shuts off the raspberry pi. Then, I'll make an installation shell script and write more apps and programs for it.
 Right now, I'm using vim with mouse support via ssh to program it, but later on, I'll support the use of the micro editor to program it for beginners.
+
+## Packages installed via GitHub
+adafruit_ssd1306
+## Packages installed via pip
+board
+
+
+busio
+
+
+keyboard
