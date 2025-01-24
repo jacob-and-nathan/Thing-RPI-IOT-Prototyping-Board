@@ -63,6 +63,7 @@ def right_button() :
 
 while True:
     """NEED TO imporove code for SW2 and SW3"""
+    print (x)
     user_input.read_button_states()
     # button_state_SW1 = GPIO.input(17)
     # button_state_SW2 = GPIO.input(27)
@@ -74,44 +75,48 @@ while True:
     button_state_SW3 = user_input.is_button_on("3")
     button_state_SW4 = user_input.is_button_on("4")
     button_state_SW5 = user_input.is_button_on("5")
-    if button_state_SW2 == False:
+    if button_state_SW3 == False:
+        x = x + 1
         clear()
-        if clicked == False :
-            if x < 0 :
-                clear()
-                x = len(files)-1
-                print ("back button is true")
-                back_button = True
-                print_to_screen(0, 0, "GO BACK", 7, 1)
-                show()
-            else :    
-                print_to_screen(0, 0, files[x].upper(), 7, 1)
-                show()
-                back_button = False
-            clicked = True
+        if x == len(files):
+            clear()
+            # x = len(files)
+            print ("back button is true")
+            back_button = True
+            print_to_screen(0, 0, "GO BACK", 7, 1)
+            show()
+            x = -1
         else :
-            clicked = True
-        x = x - 1
+            if x > len(files):
+                x = 0 
+            print_to_screen(0, 0, files[x].upper(), 7, 1)
+            show()
+            back_button = False
 
-    elif button_state_SW3 == False:
+    elif button_state_SW2 == False:
         clear()
         """Put following if statement inside next if statement, also do with SW2"""
        
-        if clicked == False :
-            x = x - 1
-            if x == len(files):
-                clear()
-                x = 0 
-                back_button = True
-                print_to_screen(0, 0, "GO BACK", 7, 1)
-                show()
-            else :    
-                print_to_screen(0, 0, files[x].upper(), 7, 1)
-                show()
-                back_button = False
-            clicked = True
-        else :
-            clicked = True
+        x = x - 1
+        # if x == len(files):
+        #     clear()
+        #     x = 0 
+        #     back_button = True
+        #     print_to_screen(0, 0, "GO BACK", 7, 1)
+        #     show()
+        # else:
+        if x == -1:
+            x = len(files)
+            clear()
+            # x = 0
+            back_button = True
+            print_to_screen(0, 0, "GO BACK", 7, 1)
+        else:
+            if x < -1:
+                x = len(files) - 1
+            print_to_screen(0, 0, files[x].upper(), 7, 1)
+            back_button = False
+        show()
     elif button_state_SW5 == False:
         clear()
         "If 'go back' is being displayed, go back one directory"""
@@ -124,16 +129,13 @@ while True:
             code_result = os.popen ("python3 " + file_path + '/' + files[x]).readlines()
             quit()
             """If the item at position x is not a .py file, go forward one directory"""    
-        elif clicked == False :
+        else:
             file_path = file_path + '/'
             file_path += files[x].rstrip("\n\r")
             if folders_entered > 0 :
                 file_prefix = '/'
             folders_entered = folders_entered + 1
             files = os.popen("ls " + file_path).readlines()
-            clicked = True
             x = 0
         print_to_screen(0, 0, files[x].upper(), 7, 1)
         show ()
-    else:
-        clicked = False

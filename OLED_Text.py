@@ -281,7 +281,6 @@ def draw_letter (x, y, array, pixel_size) :
     j = 0
     for i in range(len(array)):
         for j in range(len(array[i])):
-            print (array[i][j])
             display.pixel(x+j, y+i, array[i][j]) 
             display.pixel(x+j+pixel_size, y+i, array[i][j])
             display.pixel(x+j, y+i+pixel_size, array[i][j])

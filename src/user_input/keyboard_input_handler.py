@@ -8,8 +8,8 @@ class KeyboardHandler(BaseHandler):
         self._button_config = {
             "1": "w",
             "2": "a",
-            "3": "s",
-            "4": "d",
+            "3": "d",
+            "4": "s",
             "5": "f"
         }
         self._button_numbers = list(self._button_config.keys())
