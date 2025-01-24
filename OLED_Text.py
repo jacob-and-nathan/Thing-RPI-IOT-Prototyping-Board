@@ -1,20 +1,23 @@
-from board import SCL, SDA
-import busio
+# from board import SCL, SDA
+# import busio
+from src.graphics.display_engine.display_engine_interface import DisplayEngine
 import time
 from OLED_Icons import folder_icon, python_icon
 
 # Import the SSD1306 module.
-import adafruit_ssd1306
+# import adafruit_ssd1306
 
 
 # Create the I2C interface.
-i2c = busio.I2C(SCL, SDA)
+# i2c = busio.I2C(SCL, SDA)
 
 # Create the SSD1306 OLED class.
 # The first two parameters are the pixel width and pixel height.  Change these
 # to the right size for your display!
-display = adafruit_ssd1306.SSD1306_I2C(128, 64, i2c)
+# display = adafruit_ssd1306.SSD1306_I2C(128, 64, i2c)
 #display = adafruit_ssd1306.SSD1306_I2C(128, 64, i2c, addr=0x3c)
+
+display = DisplayEngine("emulator", 128, 64)
 
 "Basically, this file is mostly arrays.. then there's a tiny bit of 'real' code"
 
